@@ -1,0 +1,6 @@
+/* Exemple de styles CSS */
+.card-img-top {
+    width: 100%;
+    height: 200px; /* Vous pouvez ajuster la hauteur selon vos préférences */
+    object-fit: contain; /* Cela permet de découper l'image de manière à ce qu'elle remplisse l'espace sans déformation */
+}
