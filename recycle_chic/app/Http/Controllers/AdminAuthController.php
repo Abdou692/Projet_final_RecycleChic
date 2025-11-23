@@ -20,26 +20,30 @@ class AdminAuthController extends Controller
     /**
      * Gère la tentative de connexion de l'administrateur.
      */
-    public function login(Request $request)
-    {
-        // Validation des entrées du formulaire
-        $request->validate([
-            'email' => 'required|email', // L'email doit être valide
-            'password' => 'required', // Le mot de passe est obligatoire
-        ]);
+   public function login(Request $request)
+{
+    // 1. Validation
+    $credentials = $request->validate([
+        'email' => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
-        // Recherche de l'administrateur dans la base de données
-        $admin = Admin::where('email', $request->email)->first();
+    // 2. Tentative de connexion
+    if (Auth::guard('admin')->attempt($credentials)) {
+        $request->session()->regenerate();
 
-        // Vérification des informations d'identification et tentative de connexion
-        if ($admin && Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Connexion réussie, redirection vers le tableau de bord ou les catégories
-            return redirect()->route('admin.categories.index')->with('success', 'Connexion réussie.');
-        }
-
-        // Si l'authentification échoue, renvoyer un message d'erreur
-        return back();
+        return redirect()->route('admin.categories.index')
+            ->with('success', 'Connexion réussie.');
     }
+
+    // 3. Si échec
+    return back()
+        ->withErrors([
+            'email' => 'Email ou mot de passe incorrect.',
+        ])
+        ->onlyInput('email');
+}
+
 
     /**
      * Déconnecte l'administrateur et le redirige vers la page de connexion.
