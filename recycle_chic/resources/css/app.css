@@ -1,11 +1,137 @@
-@import 'tailwindcss';
+/* === Base === */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f7f7fb;
+}
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
-@source '../**/*.blade.php';
-@source '../**/*.js';
+/* === HEADER RECYCLECHIC === */
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+.rc-navbar {
+    background-color: #4b2a70; /* Violet principal */
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.rc-logo {
+    height: 48px;        /* ajuste ici si tu veux plus grand/petit */
+    width: auto;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+.rc-brand-title {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fdf7ff;
+}
+
+/* Liens de navigation */
+.rc-nav-links .nav-link {
+    color: #f9f5ff;
+    font-weight: 500;
+    margin-left: 0.75rem;
+    margin-right: 0.75rem;
+    position: relative;
+    padding-bottom: 0.2rem;
+}
+
+.rc-nav-links .nav-link:hover,
+.rc-nav-links .nav-item.active .nav-link {
+    color: #ffe08a;
+}
+
+.rc-nav-links .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 2px;
+    background: #ffe08a;
+    transition: width 0.25s ease;
+}
+
+.rc-nav-links .nav-link:hover::after,
+.rc-nav-links .nav-item.active .nav-link::after {
+    width: 100%;
+}
+
+/* Dropdown */
+.rc-navbar .dropdown-menu {
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+}
+
+/* Barre de recherche */
+.rc-search {
+    margin-left: 1.5rem;
+}
+
+.rc-search-input {
+    border-radius: 999px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: none;
+    min-width: 220px;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+.rc-search-input::placeholder {
+    color: #f1e9ff;
+}
+
+.rc-search-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #ffe08a;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Bouton de recherche */
+.rc-search-btn {
+    border-radius: 999px;
+    border: none;
+    padding: 0.45rem 1.4rem;
+    margin-left: 0.3rem;
+    font-weight: 600;
+    background: #ffe08a;
+    color: #4b2a70;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.rc-search-btn:hover,
+.rc-search-btn:focus {
+    background: #ffcf4d;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+
+/* Burger icon lisible sur fond violet */
+.navbar-light .navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.6);
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.9%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Un peu d'air pour le contenu */
+main.container {
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+}
+
+/* Logo Responsive dans la navbar */
+
+.rc-logo {
+    max-height: 56px !important;
+    height: auto;
+    width: auto;
+    object-fit: contain;
+    border-radius: 50%;
 }
