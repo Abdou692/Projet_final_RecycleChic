@@ -24,11 +24,12 @@
             <tr>
                 <td>{{ $produit->id }}</td>
                 <td class="text-center">
-                    @if($produit->image)
-                        <img src="{{ Storage::url($produit->image) }}" alt="Image produit" class="product-img">
-                    @else
-                        <span class="text-muted">Pas d'image</span>
-                    @endif
+                   @if($produit->image)
+    <img src="{{ asset('images/produits/' . $produit->image) }}" alt="Image produit" class="product-img">
+@else
+    <span class="text-muted">Pas d'image</span>
+@endif
+
                 </td>
                 <td>{{ $produit->titre }}</td>
                 <td>{{ number_format($produit->prix, 2, ',', ' ') }} €</td>

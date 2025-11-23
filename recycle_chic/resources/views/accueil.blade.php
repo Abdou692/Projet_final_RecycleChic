@@ -8,7 +8,8 @@
         @foreach($produits as $produit)
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="{{ Storage::url($produit->image) }}" class="card-img-top" alt="{{ $produit->titre }}">
+                    <img src="{{ asset('images/produits/' . $produit->image) }}" class="card-img-top" alt="{{ $produit->titre }}">
+
                     <div class="card-body">
                         <h5 class="card-title">{{ $produit->titre }}</h5>
                         <p class="card-text"><strong>{{ $produit->prix }} €</strong></p>

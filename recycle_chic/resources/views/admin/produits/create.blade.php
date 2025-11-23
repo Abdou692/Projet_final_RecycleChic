@@ -15,7 +15,7 @@
 
         <div class="form-group">
             <label for="prix">Prix</label>
-            <input type="number" step="any" id="prix" name="prix" class="form-control" required>
+            <input type="number" step="0.01" id="prix" name="prix" class="form-control" required>
         </div>
 
         <div class="form-group">

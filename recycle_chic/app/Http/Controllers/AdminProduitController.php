@@ -47,15 +47,16 @@ class AdminProduitController extends Controller
             'prix' => 'required|numeric',
             'categorie_id' => 'required|exists:categories,id',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048', // Vérification du type d'image
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
         ]);
 
         // Vérifie si une image a été envoyée
         if ($request->hasFile('image')) {
-            // Stocke l'image dans le dossier 'images' du stockage public
-            $imagePath = $request->file('image')->store('images', 'public');
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images/produits'), $imageName);
         } else {
-            $imagePath = null;
+            $imageName = null;
         }
 
         // Création et enregistrement du produit
@@ -64,7 +65,7 @@ class AdminProduitController extends Controller
             'prix' => $validated['prix'],
             'categorie_id' => $validated['categorie_id'],
             'description' => $validated['description'] ?? null,
-            'image' => $imagePath,
+            'image' => $imageName,
         ]);
 
         // Redirection avec message de succès
@@ -107,12 +108,17 @@ class AdminProduitController extends Controller
         if ($request->hasFile('image')) {
             // Suppression de l'ancienne image si elle existe
             if ($produit->image) {
-                Storage::delete($produit->image);
+                $oldImagePath = public_path('images/produits/' . $produit->image);
+                if (file_exists($oldImagePath)) {
+                    unlink($oldImagePath);
+                }
             }
             // Stockage de la nouvelle image
-            $imagePath = $request->file('image')->store('images', 'public');
+            $image = $request->file('image');
+            $imageName = time().'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('images/produits'), $imageName);
         } else {
-            $imagePath = $produit->image;
+            $imageName = $produit->image;
         }
 
         // Mise à jour des informations du produit
@@ -121,7 +127,7 @@ class AdminProduitController extends Controller
             'prix' => $validated['prix'],
             'categorie_id' => $validated['categorie_id'],
             'description' => $validated['description'],
-            'image' => $imagePath,
+            'image' => $imageName,
         ]);
 
         // Redirection avec message de succès
@@ -136,6 +142,13 @@ class AdminProduitController extends Controller
         // Récupération du produit à supprimer
         $produit = Produit::findOrFail($id);
 
+        // Suppression de l'image associée si elle existe
+        if ($produit->image) {
+            $imagePath = public_path('images/produits/' . $produit->image);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
         // Suppression du produit
         $produit->delete();
 

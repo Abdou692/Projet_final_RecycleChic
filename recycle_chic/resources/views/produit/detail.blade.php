@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-6">
-            <img src="{{ Storage::url($produit->image) }}" class="img-fluid" alt="{{ $produit->titre }}">
+            <img src="{{ asset('images/produits/' . $produit->image) }}" class="img-fluid" alt="{{ $produit->titre }}">
         </div>
         <div class="col-md-6">
             <h1>{{ $produit->titre }}</h1>
@@ -22,7 +22,8 @@
         @foreach($produits_similaires as $produit_similaire)
             <div class="col-md-3">
                 <div class="card mb-3">
-                    <img src="{{ Storage::url($produit_similaire->image) }}" class="card-img-top" alt="{{ $produit_similaire->titre }}">
+                   <img src="{{ asset('images/produits/' . $produit_similaire->image) }}" class="card-img-top" alt="{{ $produit_similaire->titre }}">
+
                     <div class="card-body">
                         <h5 class="card-title">{{ $produit_similaire->titre }}</h5>
                         <p class="card-text"><strong>{{ $produit_similaire->prix }} €</strong></p>
@@ -33,5 +34,3 @@
         @endforeach
     </div>
 @endsection
-
-
